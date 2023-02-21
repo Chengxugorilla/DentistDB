@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{51DAA56B-4CF6-4BD5-9122-B0D8BFDF55C4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DentistDatabase</RootNamespace>
+    <AssemblyName>DentistDatabaseInterface</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.OleDb, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.OleDb.7.0.0\lib\net462\System.Data.OleDb.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="患者建档.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="患者建档.Designer.cs">
+      <DependentUpon>患者建档.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DBInfo.cs" />
+    <Compile Include="戴牙后复诊.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="戴牙后复诊.Designer.cs">
+      <DependentUpon>戴牙后复诊.cs</DependentUpon>
+    </Compile>
+    <Compile Include="登录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="登录.Designer.cs">
+      <DependentUpon>登录.cs</DependentUpon>
+    </Compile>
+    <Compile Include="主界面.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="主界面.Designer.cs">
+      <DependentUpon>主界面.cs</DependentUpon>
+    </Compile>
+    <Compile Include="查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="查询.Designer.cs">
+      <DependentUpon>查询.cs</DependentUpon>
+    </Compile>
+    <Compile Include="注册.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="注册.Designer.cs">
+      <DependentUpon>注册.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="患者编辑.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="患者编辑.Designer.cs">
+      <DependentUpon>患者编辑.cs</DependentUpon>
+    </Compile>
+    <Compile Include="档案目录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="档案目录.Designer.cs">
+      <DependentUpon>档案目录.cs</DependentUpon>
+    </Compile>
+    <Compile Include="一期.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="一期.Designer.cs">
+      <DependentUpon>一期.cs</DependentUpon>
+    </Compile>
+    <Compile Include="二期.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="二期.Designer.cs">
+      <DependentUpon>二期.cs</DependentUpon>
+    </Compile>
+    <Compile Include="取模.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="取模.Designer.cs">
+      <DependentUpon>取模.cs</DependentUpon>
+    </Compile>
+    <Compile Include="初诊.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="初诊.Designer.cs">
+      <DependentUpon>初诊.cs</DependentUpon>
+    </Compile>
+    <Compile Include="戴牙.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="戴牙.Designer.cs">
+      <DependentUpon>戴牙.cs</DependentUpon>
+    </Compile>
+    <Compile Include="患者个性化标签库.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="患者个性化标签库.Designer.cs">
+      <DependentUpon>患者个性化标签库.cs</DependentUpon>
+    </Compile>
+    <Compile Include="过渡义齿.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="过渡义齿.Designer.cs">
+      <DependentUpon>过渡义齿.cs</DependentUpon>
+    </Compile>
+    <Compile Include="谈方案.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="谈方案.Designer.cs">
+      <DependentUpon>谈方案.cs</DependentUpon>
+    </Compile>
+    <Compile Include="软硬组织库.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="软硬组织库.Designer.cs">
+      <DependentUpon>软硬组织库.cs</DependentUpon>
+    </Compile>
+    <Compile Include="选择患者编辑.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="选择患者编辑.Designer.cs">
+      <DependentUpon>选择患者编辑.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="患者建档.resx">
+      <DependentUpon>患者建档.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="戴牙后复诊.resx">
+      <DependentUpon>戴牙后复诊.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="登录.resx">
+      <DependentUpon>登录.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="主界面.resx">
+      <DependentUpon>主界面.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="查询.resx">
+      <DependentUpon>查询.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="注册.resx">
+      <DependentUpon>注册.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="患者编辑.resx">
+      <DependentUpon>患者编辑.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="一期.resx">
+      <DependentUpon>一期.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="二期.resx">
+      <DependentUpon>二期.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="取模.resx">
+      <DependentUpon>取模.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="戴牙.resx">
+      <DependentUpon>戴牙.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="档案目录.resx">
+      <DependentUpon>档案目录.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="初诊.resx">
+      <DependentUpon>初诊.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="患者个性化标签库.resx">
+      <DependentUpon>患者个性化标签库.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="过渡义齿.resx">
+      <DependentUpon>过渡义齿.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="谈方案.resx">
+      <DependentUpon>谈方案.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="软硬组织库.resx">
+      <DependentUpon>软硬组织库.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="选择患者编辑.resx">
+      <DependentUpon>选择患者编辑.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
