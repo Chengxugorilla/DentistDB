@@ -87,11 +87,30 @@ namespace DentistDatabase
                 String strSQL = string.Empty;
                 if (dr.RowState == System.Data.DataRowState.Added) //增加
                 {
-                    strSQL = "";
+                    strSQL = @"IF((SELECT COUNT(*)
+                                    FROM 患者个性化标签库
+                                    WHERE 患者代码 = '" + ID + "' AND 特殊患者类型 = '" + dr["特殊患者类型"].ToString() + @"') = 1)
+                               BEGIN
+                                    RAISERROR('个性化标签库中已存在数据', 16, 1)
+                               END
+                               ELSE
+                               BEGIN
+                                 INSERT INTO [dbo].[患者个性化标签库]
+                                       ([患者代码]
+                                       ,[特殊患者类型]
+                                       ,[特殊描述]
+                                       ,[新增标签功能])
+                                 VALUES
+                                       ('" + ID + @"'
+                                       ,'" + dr["特殊患者类型"].ToString() + @"'
+                                       ,'" + dr["特殊描述"].ToString() + @"'
+                                       ,'" + dr["新增标签功能"].ToString() + @"')
+                               END";
                 }
                 else if (dr.RowState == System.Data.DataRowState.Deleted) //删除
                 {
-                    strSQL = "";
+                    strSQL = @"DELETE FROM[dbo].[患者个性化标签库]
+                               WHERE 患者代码 = '" + ID + "' AND 特殊患者类型 = '" + dr["特殊患者类型", DataRowVersion.Original].ToString() + "'";
                 }
                 else if (dr.RowState == System.Data.DataRowState.Modified) //修改
                 {

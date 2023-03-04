@@ -36,9 +36,10 @@ namespace DentistDatabase
 
         private void BindData2Dgv(DataGridView dgv)
         {
-            String sqlText = "SELECT [牙位-患者表].种植牙位, 二期信息.就诊记录, 二期信息.日期, 二期信息.是否进行2期手术, 二期信息.口腔卫生情况, 二期信息.种植位点牙龈情况, 二期信息.种植体周围阴影情况, 二期信息.种植体颈部骨质吸收情况, 二期信息.愈合基台型号, 愈合基台表.愈合基台直径, 二期信息.愈合基台穿龈高度, 二期信息.是否拍2期CBCT, 二期信息.是否拍2期小牙片, 二期信息.是否拍2期全景片, 二期信息.[临床照片（多张）] " +
-                "FROM 二期信息 INNER JOIN [牙位-患者表] ON 二期信息.牙位ID = [牙位-患者表].牙位ID INNER JOIN 档案目录 ON [牙位-患者表].患者代码 = 档案目录.患者代码 LEFT JOIN 愈合基台表 ON 二期信息.愈合基台型号 = 愈合基台表.愈合基台型号 " +
-                "WHERE 档案目录.患者代码='" + ID + "'";
+            String sqlText = @"SELECT [牙位-患者表].种植牙位, 二期信息.就诊记录, 二期信息.日期, 二期信息.是否进行2期手术, 二期信息.口腔卫生情况, 二期信息.种植位点牙龈情况, 二期信息.种植体周围阴影情况, 二期信息.种植体颈部骨质吸收情况, 
+                二期信息.愈合基台型号, 愈合基台表.愈合基台直径, 二期信息.愈合基台穿龈高度, 二期信息.是否拍2期CBCT, 二期信息.[2期CBCT链接], 二期信息.是否拍2期小牙片, 二期信息.[2期小牙片链接],二期信息.是否拍2期全景片, 二期信息.[2期全景片链接],二期信息.[临床照片（多张）], 二期信息.病历, 二期信息.病历链接
+                FROM 二期信息 INNER JOIN [牙位-患者表] ON 二期信息.牙位ID = [牙位-患者表].牙位ID INNER JOIN 档案目录 ON [牙位-患者表].患者代码 = 档案目录.患者代码 LEFT JOIN 愈合基台表 ON 二期信息.愈合基台型号 = 愈合基台表.愈合基台型号
+                WHERE 档案目录.患者代码 = '" + ID + "'";
 
             conn = new OleDbConnection(DBInfo.ConnectString);//创建一个新的连接
             OleDbCommand cmd = new OleDbCommand();//OleDbCommand表示要对数据源执行的sql语句或存储过程；初始化此实例
@@ -86,11 +87,116 @@ namespace DentistDatabase
                 String strSQL = string.Empty;
                 if (dr.RowState == System.Data.DataRowState.Added) //增加
                 {
-                    strSQL = "";
+                    strSQL = @" IF((SELECT COUNT(*) 
+                                    FROM 二期信息
+                                    WHERE 牙位ID = '" + ID + dr["种植牙位"].ToString() + @"') = 1)
+                                BEGIN
+                                    RAISERROR('一期信息表中已存在数据', 16, 1)
+                                END
+                                ELSE
+                                BEGIN
+                                    IF((SELECT COUNT(*)
+                                        FROM [牙位-患者表]
+                                        WHERE 牙位ID = '" + ID + dr["种植牙位"].ToString() + @"') = 0)
+                                    BEGIN
+                                     INSERT INTO [dbo].[牙位-患者表]
+                                           ([牙位ID]
+                                           ,[患者代码]
+                                           ,[种植牙位])
+                                     VALUES
+                                           ( '" + ID + dr["种植牙位"].ToString() + @"'
+                                           ,'" + ID.ToString() + @"'
+                                           ,'" + dr["种植牙位"].ToString() + @"')
+                                    INSERT INTO [dbo].[二期信息]
+                                       ([牙位ID]
+                                       ,[就诊记录]
+                                       ,[日期]
+                                       ,[是否进行2期手术]
+                                       ,[口腔卫生情况]
+                                       ,[种植位点牙龈情况]
+                                       ,[种植体周围阴影情况]
+                                       ,[种植体颈部骨质吸收情况]
+                                       ,[愈合基台型号]
+                                       ,[愈合基台穿龈高度]
+                                       ,[是否拍2期CBCT]
+                                       ,[2期CBCT链接]
+                                       ,[是否拍2期小牙片]
+                                       ,[2期小牙片链接]
+                                       ,[是否拍2期全景片]
+                                       ,[2期全景片链接]
+                                       ,[临床照片（多张）]
+                                       ,[病历]
+                                       ,[病历链接])
+                                 VALUES
+                                       ('" + ID + dr["种植牙位"].ToString() + @"'
+                                       ,'" + dr["就诊记录"].ToString() + @"'
+                                       ,'" + dr["日期"].ToString() + @"'
+                                       ,'" + dr["是否进行2期手术"].ToString() + @"'
+                                       ,'" + dr["口腔卫生情况"].ToString() + @"'
+                                       ,'" + dr["种植位点牙龈情况"].ToString() + @"'
+                                       ,'" + dr["种植体周围阴影情况"].ToString() + @"'
+                                       ,'" + dr["种植体颈部骨质吸收情况"].ToString() + @"'
+                                       ,'" + dr["愈合基台型号"].ToString() + @"'
+                                       ,'" + dr["愈合基台穿龈高度"].ToString() + @"'
+                                       ,'" + dr["是否拍2期CBCT"].ToString() + @"'
+                                       ,'" + dr["2期CBCT链接"].ToString() + @"'
+                                       ,'" + dr["是否拍2期小牙片"].ToString() + @"'
+                                       ,'" + dr["2期小牙片链接"].ToString() + @"'
+                                       ,'" + dr["是否拍2期全景片"].ToString() + @"'
+                                       ,'" + dr["2期全景片链接"].ToString() + @"'
+                                       ,'" + dr["临床照片（多张）"].ToString() + @"'
+                                       ,'" + dr["病历"].ToString() + @"'
+                                       ,'" + dr["病历链接"].ToString() + @"')
+                                       END
+                                      ELSE
+                                      BEGIN
+                                      INSERT INTO [dbo].[二期信息]
+                                       ([牙位ID]
+                                       ,[就诊记录]
+                                       ,[日期]
+                                       ,[是否进行2期手术]
+                                       ,[口腔卫生情况]
+                                       ,[种植位点牙龈情况]
+                                       ,[种植体周围阴影情况]
+                                       ,[种植体颈部骨质吸收情况]
+                                       ,[愈合基台型号]
+                                       ,[愈合基台穿龈高度]
+                                       ,[是否拍2期CBCT]
+                                       ,[2期CBCT链接]
+                                       ,[是否拍2期小牙片]
+                                       ,[2期小牙片链接]
+                                       ,[是否拍2期全景片]
+                                       ,[2期全景片链接]
+                                       ,[临床照片（多张）]
+                                       ,[病历]
+                                       ,[病历链接])
+                                 VALUES
+                                       ('" + ID + dr["种植牙位"].ToString() + @"'
+                                       ,'" + dr["就诊记录"].ToString() + @"'
+                                       ,'" + dr["日期"].ToString() + @"'
+                                       ,'" + dr["是否进行2期手术"].ToString() + @"'
+                                       ,'" + dr["口腔卫生情况"].ToString() + @"'
+                                       ,'" + dr["种植位点牙龈情况"].ToString() + @"'
+                                       ,'" + dr["种植体周围阴影情况"].ToString() + @"'
+                                       ,'" + dr["种植体颈部骨质吸收情况"].ToString() + @"'
+                                       ,'" + dr["愈合基台型号"].ToString() + @"'
+                                       ,'" + dr["愈合基台穿龈高度"].ToString() + @"'
+                                       ,'" + dr["是否拍2期CBCT"].ToString() + @"'
+                                       ,'" + dr["2期CBCT链接"].ToString() + @"'
+                                       ,'" + dr["是否拍2期小牙片"].ToString() + @"'
+                                       ,'" + dr["2期小牙片链接"].ToString() + @"'
+                                       ,'" + dr["是否拍2期全景片"].ToString() + @"'
+                                       ,'" + dr["2期全景片链接"].ToString() + @"'
+                                       ,'" + dr["临床照片（多张）"].ToString() + @"'
+                                       ,'" + dr["病历"].ToString() + @"'
+                                       ,'" + dr["病历链接"].ToString() + @"')
+                                      END
+                                      END";
                 }
                 else if (dr.RowState == System.Data.DataRowState.Deleted) //删除
                 {
-                    strSQL = "";
+                    strSQL = @"DELETE FROM [dbo].[二期信息]
+                                WHERE 牙位ID = '" + ID + dr["种植牙位", DataRowVersion.Original].ToString() + "'";
                 }
                 else if (dr.RowState == System.Data.DataRowState.Modified) //修改
                 {

@@ -39,8 +39,8 @@ namespace DentistDatabase
         {
             String sqlText = @"SELECT  [牙位-患者表].种植牙位, 戴牙.就诊记录, 戴牙.日期, 戴牙.基台编号, 戴牙.基台类型, 
                    戴牙.基台直径, 戴牙.基台高度, 戴牙.连接类型, 戴牙.修复体类型, 戴牙.是否被动就位, 
-                   戴牙.调合, 戴牙.戴牙后备注, 戴牙.是否拍戴牙CBCT, 戴牙.是否拍戴牙小牙片, 
-                   戴牙.是否拍戴牙全景片, 戴牙.[临床照片（多张）]
+                   戴牙.调合, 戴牙.戴牙后备注, 戴牙.是否拍戴牙CBCT, 戴牙.戴牙CBCT链接, 戴牙.是否拍戴牙小牙片, 戴牙.戴牙小牙片链接,
+                   戴牙.是否拍戴牙全景片, 戴牙.戴牙全景片链接, 戴牙.[临床照片（多张）], 戴牙.病历, 戴牙.病历链接
                                 FROM      [牙位-患者表] INNER JOIN
                    档案目录 ON [牙位-患者表].患者代码 = 档案目录.患者代码 INNER JOIN
                    戴牙 ON [牙位-患者表].牙位ID = 戴牙.牙位ID
@@ -92,11 +92,124 @@ namespace DentistDatabase
                 String strSQL = string.Empty;
                 if (dr.RowState == System.Data.DataRowState.Added) //增加
                 {
-                    strSQL = "";
+                    strSQL = @" IF((SELECT COUNT(*)
+                                    FROM 戴牙
+                                    WHERE 牙位ID = '" + ID + dr["种植牙位"].ToString() + @"') = 1)
+                                BEGIN
+                                    RAISERROR('戴牙表中已存在数据', 16, 1)
+                                END
+                                ELSE
+                                BEGIN
+                                    IF((SELECT COUNT(*)
+                                        FROM [牙位-患者表]
+                                        WHERE 牙位ID = '" + ID + dr["种植牙位"].ToString() + @"') = 0)
+                                    BEGIN
+                                     INSERT INTO[dbo].[牙位-患者表]
+                                           ([牙位ID]
+                                           ,[患者代码]
+                                           ,[种植牙位])
+                                     VALUES
+                                           ('" + ID + dr["种植牙位"].ToString() + @"'
+                                           , '" + ID.ToString() + @"'
+                                           , '" + dr["种植牙位"].ToString() + @"')
+                                    INSERT INTO [dbo].[戴牙]
+                                           ([牙位ID]
+                                           ,[就诊记录]
+                                           ,[日期]
+                                           ,[基台编号]
+                                           ,[基台类型]
+                                           ,[基台直径]
+                                           ,[基台高度]
+                                           ,[连接类型]
+                                           ,[修复体类型]
+                                           ,[是否被动就位]
+                                           ,[调合]
+                                           ,[戴牙后备注]
+                                           ,[是否拍戴牙CBCT]
+                                           ,[戴牙CBCT链接]
+                                           ,[是否拍戴牙小牙片]
+                                           ,[戴牙小牙片链接]
+                                           ,[是否拍戴牙全景片]
+                                           ,[戴牙全景片链接]
+                                           ,[临床照片（多张）]
+                                           ,[病历]
+                                           ,[病历链接])
+                                     VALUES
+                                           ('" + ID + dr["种植牙位"].ToString() + @"'
+                                           ,'" + dr["就诊记录"].ToString() + @"'
+                                           ,'" + dr["日期"].ToString() + @"'
+                                           ,'" + dr["基台编号"].ToString() + @"'
+                                           ,'" + dr["基台类型"].ToString() + @"'
+                                           ,'" + dr["基台直径"].ToString() + @"'
+                                           ,'" + dr["基台高度"].ToString() + @"'
+                                           ,'" + dr["连接类型"].ToString() + @"'
+                                           ,'" + dr["修复体类型"].ToString() + @"'
+                                           ,'" + dr["是否被动就位"].ToString() + @"'
+                                           ,'" + dr["调合"].ToString() + @"'
+                                           ,'" + dr["戴牙后备注"].ToString() + @"'
+                                           ,'" + dr["是否拍戴牙CBCT"].ToString() + @"'
+                                           ,'" + dr["戴牙CBCT链接"].ToString() + @"'
+                                           ,'" + dr["是否拍戴牙小牙片"].ToString() + @"'
+                                           ,'" + dr["戴牙小牙片链接"].ToString() + @"'
+                                           ,'" + dr["是否拍戴牙全景片"].ToString() + @"'
+                                           ,'" + dr["戴牙全景片链接"].ToString() + @"'
+                                           ,'" + dr["临床照片（多张）"].ToString() + @"'
+                                           ,'" + dr["病历"].ToString() + @"'
+                                           ,'" + dr["病历链接"].ToString() + @"')
+                                       END
+                                      ELSE
+                                      BEGIN
+                                      INSERT INTO [dbo].[戴牙]
+                                           ([牙位ID]
+                                           ,[就诊记录]
+                                           ,[日期]
+                                           ,[基台编号]
+                                           ,[基台类型]
+                                           ,[基台直径]
+                                           ,[基台高度]
+                                           ,[连接类型]
+                                           ,[修复体类型]
+                                           ,[是否被动就位]
+                                           ,[调合]
+                                           ,[戴牙后备注]
+                                           ,[是否拍戴牙CBCT]
+                                           ,[戴牙CBCT链接]
+                                           ,[是否拍戴牙小牙片]
+                                           ,[戴牙小牙片链接]
+                                           ,[是否拍戴牙全景片]
+                                           ,[戴牙全景片链接]
+                                           ,[临床照片（多张）]
+                                           ,[病历]
+                                           ,[病历链接])
+                                     VALUES
+                                           ('" + ID + dr["种植牙位"].ToString() + @"'
+                                           ,'" + dr["就诊记录"].ToString() + @"'
+                                           ,'" + dr["日期"].ToString() + @"'
+                                           ,'" + dr["基台编号"].ToString() + @"'
+                                           ,'" + dr["基台类型"].ToString() + @"'
+                                           ,'" + dr["基台直径"].ToString() + @"'
+                                           ,'" + dr["基台高度"].ToString() + @"'
+                                           ,'" + dr["连接类型"].ToString() + @"'
+                                           ,'" + dr["修复体类型"].ToString() + @"'
+                                           ,'" + dr["是否被动就位"].ToString() + @"'
+                                           ,'" + dr["调合"].ToString() + @"'
+                                           ,'" + dr["戴牙后备注"].ToString() + @"'
+                                           ,'" + dr["是否拍戴牙CBCT"].ToString() + @"'
+                                           ,'" + dr["戴牙CBCT链接"].ToString() + @"'
+                                           ,'" + dr["是否拍戴牙小牙片"].ToString() + @"'
+                                           ,'" + dr["戴牙小牙片链接"].ToString() + @"'
+                                           ,'" + dr["是否拍戴牙全景片"].ToString() + @"'
+                                           ,'" + dr["戴牙全景片链接"].ToString() + @"'
+                                           ,'" + dr["临床照片（多张）"].ToString() + @"'
+                                           ,'" + dr["病历"].ToString() + @"'
+                                           ,'" + dr["病历链接"].ToString() + @"')
+                                      END
+                                      END";
                 }
                 else if (dr.RowState == System.Data.DataRowState.Deleted) //删除
                 {
-                    strSQL = "";
+                    strSQL = @"DELETE FROM [dbo].[戴牙]
+                                WHERE 牙位ID = '" + ID + dr["种植牙位", DataRowVersion.Original].ToString() + "'";
                 }
                 else if (dr.RowState == System.Data.DataRowState.Modified) //修改
                 {
@@ -113,9 +226,14 @@ namespace DentistDatabase
                                   ,[调合] = '" + dr["调合"].ToString() + @"'
                                   ,[戴牙后备注] = '" + dr["戴牙后备注"].ToString() + @"'
                                   ,[是否拍戴牙CBCT] = '" + dr["是否拍戴牙CBCT"].ToString() + @"'
+                                  ,[戴牙CBCT链接] = '" + dr["戴牙CBCT链接"].ToString() + @"'
                                   ,[是否拍戴牙小牙片] = '" + dr["是否拍戴牙小牙片"].ToString() + @"'
+                                  ,[戴牙小牙片链接] = '" + dr["戴牙小牙片链接"].ToString() + @"'
                                   ,[是否拍戴牙全景片] = '" + dr["是否拍戴牙全景片"].ToString() + @"'
+                                  ,[戴牙全景片链接] = '" + dr["戴牙全景片链接"].ToString() + @"'
                                   ,[临床照片（多张）] = '" + dr["临床照片（多张）"].ToString() + @"'
+                                  ,[病历] = '" + dr["病历"].ToString() + @"'
+                                  ,[病历链接] = '" + dr["病历链接"].ToString() + @"'
                               WHERE 牙位ID = (SELECT  牙位ID
 					                FROM [牙位-患者表]
 					                WHERE 患者代码 = '" + ID + "' AND 种植牙位 = '" + dr["种植牙位"].ToString() + "')";

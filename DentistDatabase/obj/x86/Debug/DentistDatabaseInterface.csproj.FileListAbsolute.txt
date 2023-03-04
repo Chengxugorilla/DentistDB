@@ -154,3 +154,5 @@ C:\Users\19177\Desktop\dev-DB\DentistDatabase\obj\x86\Debug\DentistDatabaseInter
 C:\Users\19177\Desktop\dev-DB\DentistDatabase\obj\x86\Debug\DentistDatabaseInterface.csproj.CopyComplete
 C:\Users\19177\Desktop\dev-DB\DentistDatabase\obj\x86\Debug\DentistDatabaseInterface.exe
 C:\Users\19177\Desktop\dev-DB\DentistDatabase\obj\x86\Debug\DentistDatabaseInterface.pdb
+C:\Users\19177\Desktop\dev-DB\DentistDatabase\obj\x86\Debug\DentistDatabase.就诊记录查询.resources
+C:\Users\19177\Desktop\dev-DB\DentistDatabase\obj\x86\Debug\DentistDatabase.合并就诊记录.resources

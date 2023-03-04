@@ -35,10 +35,10 @@ namespace DentistDatabase
 
         private void BindData2Dgv(DataGridView dgv)
         {
-            String sqlText = @"SELECT  [牙位-患者表].种植牙位, 取模.就诊记录, 取模.日期, 取模.[取模方式（开窗式、闭窗式、数字化取模）], 
-                   取模.是否多牙取模, 取模.比色色号, 取模.伤口愈合情况, 取模.[数字化取模（已丢失资料）], 
-                   取模.是否拍取模CBCT, 取模.是否拍取模小牙片, 取模.是否拍取模全景片, 
-                   取模.[临床照片（多张）]
+            String sqlText = @"SELECT  [牙位-患者表].种植牙位, 取模.就诊记录, 取模.日期, 取模.[取模方式], 
+                   取模.是否多牙取模, 取模.比色色号, 取模.伤口愈合情况, 取模.[数字化取模（已丢失资料）], 取模.数字化取模链接,
+                   取模.是否拍取模CBCT, 取模.取模CBCT链接,取模.是否拍取模小牙片, 取模.取模小牙片链接,取模.是否拍取模全景片, 取模.取模全景片链接,
+                   取模.[临床照片（多张）], 取模.病历,取模.病历链接
                     FROM      取模 INNER JOIN 
                    [牙位-患者表] ON 取模.牙位ID = [牙位-患者表].牙位ID INNER JOIN
                    档案目录 ON [牙位-患者表].患者代码 = 档案目录.患者代码
@@ -90,26 +90,133 @@ namespace DentistDatabase
                 String strSQL = string.Empty;
                 if (dr.RowState == System.Data.DataRowState.Added) //增加
                 {
-                    strSQL = "";
+                    strSQL = @" IF((SELECT COUNT(*)
+                                    FROM 取模
+                                    WHERE 牙位ID = '" + ID + dr["种植牙位"].ToString() + @"') = 1)
+                                BEGIN
+                                    RAISERROR('取模表中已存在数据', 16, 1)
+                                END
+                                ELSE
+                                BEGIN
+                                    IF((SELECT COUNT(*)
+                                        FROM [牙位-患者表]
+                                        WHERE 牙位ID = '" + ID + dr["种植牙位"].ToString() + @"') = 0)
+                                    BEGIN
+                                     INSERT INTO[dbo].[牙位-患者表]
+                                           ([牙位ID]
+                                           ,[患者代码]
+                                           ,[种植牙位])
+                                     VALUES
+                                           ('" + ID + dr["种植牙位"].ToString() + @"'
+                                           , '" + ID.ToString() + @"'
+                                           , '" + dr["种植牙位"].ToString() + @"')
+                                    INSERT INTO [dbo].[取模]
+                                       ([牙位ID]
+                                       ,[就诊记录]
+                                       ,[日期]
+                                       ,[取模方式]
+                                       ,[是否多牙取模]
+                                       ,[比色色号]
+                                       ,[伤口愈合情况]
+                                       ,[数字化取模（已丢失资料）]
+                                       ,[数字化取模链接]
+                                       ,[是否拍取模CBCT]
+                                       ,[取模CBCT链接]
+                                       ,[是否拍取模小牙片]
+                                       ,[取模小牙片链接]
+                                       ,[是否拍取模全景片]
+                                       ,[取模全景片链接]
+                                       ,[临床照片（多张）]
+                                       ,[病历]
+                                       ,[病历链接])
+                                 VALUES
+                                       ('" + ID + dr["种植牙位"].ToString() + @"'
+                                       ,'" + dr["就诊记录"].ToString() + @"'
+                                       ,'" + dr["日期"].ToString() + @"'
+                                       ,'" + dr["取模方式"].ToString() + @"'
+                                       ,'" + dr["是否多牙取模"].ToString() + @"'
+                                       ,'" + dr["比色色号"].ToString() + @"'
+                                       ,'" + dr["伤口愈合情况"].ToString() + @"'
+                                       ,'" + dr["数字化取模（已丢失资料）"].ToString() + @"'
+                                       ,'" + dr["数字化取模链接"].ToString() + @"'
+                                       ,'" + dr["是否拍取模CBCT"].ToString() + @"'
+                                       ,'" + dr["取模CBCT链接"].ToString() + @"'
+                                       ,'" + dr["是否拍取模小牙片"].ToString() + @"'
+                                       ,'" + dr["取模小牙片链接"].ToString() + @"'
+                                       ,'" + dr["是否拍取模全景片"].ToString() + @"'
+                                       ,'" + dr["取模全景片链接"].ToString() + @"'
+                                       ,'" + dr["临床照片（多张）"].ToString() + @"'
+                                       ,'" + dr["病历"].ToString() + @"'
+                                       ,'" + dr["病历链接"].ToString() + @"')
+                                       END
+                                      ELSE
+                                      BEGIN
+                                      INSERT INTO [dbo].[取模]
+                                       ([牙位ID]
+                                       ,[就诊记录]
+                                       ,[日期]
+                                       ,[取模方式]
+                                       ,[是否多牙取模]
+                                       ,[比色色号]
+                                       ,[伤口愈合情况]
+                                       ,[数字化取模（已丢失资料）]
+                                       ,[数字化取模链接]
+                                       ,[是否拍取模CBCT]
+                                       ,[取模CBCT链接]
+                                       ,[是否拍取模小牙片]
+                                       ,[取模小牙片链接]
+                                       ,[是否拍取模全景片]
+                                       ,[取模全景片链接]
+                                       ,[临床照片（多张）]
+                                       ,[病历]
+                                       ,[病历链接])
+                                 VALUES
+                                       ('" + ID + dr["种植牙位"].ToString() + @"'
+                                       ,'" + dr["就诊记录"].ToString() + @"'
+                                       ,'" + dr["日期"].ToString() + @"'
+                                       ,'" + dr["取模方式"].ToString() + @"'
+                                       ,'" + dr["是否多牙取模"].ToString() + @"'
+                                       ,'" + dr["比色色号"].ToString() + @"'
+                                       ,'" + dr["伤口愈合情况"].ToString() + @"'
+                                       ,'" + dr["数字化取模（已丢失资料）"].ToString() + @"'
+                                       ,'" + dr["数字化取模链接"].ToString() + @"'
+                                       ,'" + dr["是否拍取模CBCT"].ToString() + @"'
+                                       ,'" + dr["取模CBCT链接"].ToString() + @"'
+                                       ,'" + dr["是否拍取模小牙片"].ToString() + @"'
+                                       ,'" + dr["取模小牙片链接"].ToString() + @"'
+                                       ,'" + dr["是否拍取模全景片"].ToString() + @"'
+                                       ,'" + dr["取模全景片链接"].ToString() + @"'
+                                       ,'" + dr["临床照片（多张）"].ToString() + @"'
+                                       ,'" + dr["病历"].ToString() + @"'
+                                       ,'" + dr["病历链接"].ToString() + @"')
+                                      END
+                                      END";
                 }
                 else if (dr.RowState == System.Data.DataRowState.Deleted) //删除
                 {
-                    strSQL = "";
+                    strSQL = @"DELETE FROM [dbo].[取模]
+                                WHERE 牙位ID = '" + ID + dr["种植牙位", DataRowVersion.Original].ToString() + "'";
                 }
                 else if (dr.RowState == System.Data.DataRowState.Modified) //修改
                 {
                     strSQL = @"UPDATE [取模]
                                    SET [就诊记录] = '" + dr["就诊记录"].ToString() + @"'
                                       ,[日期] = '" + dr["日期"].ToString() + @"'
-                                      ,[取模方式（开窗式、闭窗式、数字化取模）] = '" + dr["取模方式（开窗式、闭窗式、数字化取模）"].ToString() + @"'
+                                      ,[取模方式] = '" + dr["取模方式"].ToString() + @"'
                                       ,[是否多牙取模] = '" + dr["是否多牙取模"].ToString() + @"'
                                       ,[比色色号] = '" + dr["比色色号"].ToString() + @"'
                                       ,[伤口愈合情况] = '" + dr["伤口愈合情况"].ToString() + @"'
                                       ,[数字化取模（已丢失资料）] = '" + dr["数字化取模（已丢失资料）"].ToString() + @"'
+                                      ,[数字化取模链接] = '" + dr["数字化取模链接"].ToString() + @"'
                                       ,[是否拍取模CBCT] = '" + dr["是否拍取模CBCT"].ToString() + @"'
+                                      ,[取模CBCT链接] = '" + dr["取模CBCT链接"].ToString() + @"'
                                       ,[是否拍取模小牙片] = '" + dr["是否拍取模小牙片"].ToString() + @"'
+                                      ,[取模小牙片链接] = '" + dr["取模小牙片链接"].ToString() + @"'
                                       ,[是否拍取模全景片] = '" + dr["是否拍取模全景片"].ToString() + @"'
+                                      ,[取模全景片链接] = '" + dr["取模全景片链接"].ToString() + @"'
                                       ,[临床照片（多张）] = '" + dr["临床照片（多张）"].ToString() + @"'
+                                      ,[病历] = '" + dr["病历"].ToString() + @"'
+                                      ,[病历链接] = '" + dr["病历链接"].ToString() + @"'
                                  WHERE 牙位ID = (SELECT  牙位ID
 					                FROM [牙位-患者表]
 					                WHERE 患者代码 = '" + ID + "' AND 种植牙位 = '" + dr["种植牙位"].ToString() + "')";

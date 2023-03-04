@@ -55,5 +55,12 @@ namespace DentistDatabase
             查询 qt= new 查询();
             qt.Show();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            就诊记录查询 rs = new 就诊记录查询();
+            rs.Show();
+        }
     }
 }

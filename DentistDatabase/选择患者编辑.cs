@@ -79,10 +79,25 @@ namespace DentistDatabase
 
         private void button2_Click(object sender, EventArgs e)
         {
-            PatientID = dgv.CurrentRow.Cells["患者代码"].Value.ToString();
+            if(dgv.Rows.Count != 0)
+            {
+                PatientID = dgv.CurrentRow.Cells["患者代码"].Value.ToString();
+                this.Close();
+                患者编辑 edit = new 患者编辑(PatientID);
+                edit.Show();
+            }
+        }
+
+        private void dgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
             this.Close();
-            患者编辑 edit = new 患者编辑(PatientID);
-            edit.Show();
+            主界面 main = new 主界面();
+            main.Show();
         }
     }
 }

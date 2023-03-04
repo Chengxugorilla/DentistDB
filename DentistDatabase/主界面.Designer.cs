@@ -88,6 +88,7 @@
             this.button5.TabIndex = 5;
             this.button5.Text = "合并就诊记录";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // 主界面
             // 

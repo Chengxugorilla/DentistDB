@@ -32,7 +32,7 @@ namespace DentistDatabase
 
         private void BindData2Dgv(DataGridView dgv)
         {
-            String sqlText = "SELECT 谈方案.就诊记录, 谈方案.谈方案时间,谈方案.是否谈方案, 谈方案.是否签手术同意书, 谈方案.种植态度, 谈方案.是否种植模拟, 谈方案.病历, 谈方案.病历链接 " +
+            String sqlText = "SELECT 谈方案.就诊记录, 谈方案.谈方案日期,谈方案.是否谈方案, 谈方案.是否签手术同意书, 谈方案.种植态度, 谈方案.是否种植模拟, 谈方案.病历, 谈方案.病历链接 " +
                 "FROM 谈方案 INNER JOIN 档案目录 ON 谈方案.患者代码 = 档案目录.患者代码 " +
                 "WHERE 档案目录.患者代码='" + ID + "'";
 
@@ -84,7 +84,7 @@ namespace DentistDatabase
                 {
                     strSQL = @"INSERT INTO [dbo].[谈方案]
                                        ([患者代码]
-                                       ,[谈方案时间]
+                                       ,[谈方案日期]
                                        ,[就诊记录]
                                        ,[是否谈方案]
                                        ,[是否签手术同意书]
@@ -94,7 +94,7 @@ namespace DentistDatabase
                                        ,[病历链接])
                                  VALUES
                                        ('" + ID  + @"'
-                                       ,'" + dr["谈方案时间"].ToString() + @"'
+                                       ,'" + dr["谈方案日期"].ToString() + @"'
                                        ,'" + dr["就诊记录"].ToString() + @"'
                                        ,'" + dr["是否谈方案"].ToString() + @"'
                                        ,'" + dr["是否签手术同意书"].ToString() + @"'
@@ -106,20 +106,20 @@ namespace DentistDatabase
                 else if (dr.RowState == System.Data.DataRowState.Deleted) //删除
                 {
                     strSQL = @"DELETE FROM [dbo].[谈方案]
-                                WHERE 患者代码 = '" + ID + "' AND 谈方案时间 = '" + dr["谈方案时间", DataRowVersion.Original].ToString() + "'";
+                                WHERE 患者代码 = '" + ID + "' AND 谈方案日期 = '" + dr["谈方案日期", DataRowVersion.Original].ToString() + "'";
                 }
                 else if (dr.RowState == System.Data.DataRowState.Modified) //修改
                 {
                     strSQL = @"UPDATE [dbo].[谈方案]
                                SET [就诊记录] =  '" + dr["就诊记录"].ToString() + @"'
-                                  ,[谈方案时间] = '" + dr["谈方案时间"].ToString() + @"'
+                                  ,[谈方案日期] = '" + dr["谈方案日期"].ToString() + @"'
                                   ,[是否谈方案] = '" + dr["是否谈方案"].ToString() + @"'
                                   ,[是否签手术同意书] = '" + dr["是否签手术同意书"].ToString() + @"'
                                   ,[种植态度] = '" + dr["种植态度"].ToString() + @"'
                                   ,[是否种植模拟] = '" + dr["是否种植模拟"].ToString() + @"'
                                   ,[病历] = '" + dr["病历"].ToString() + @"'
                                   ,[病历链接] = '" + dr["病历链接"].ToString() + @"'
-                              WHERE 患者代码='" + ID + "' AND 谈方案时间 = '" + dr["谈方案时间", DataRowVersion.Original].ToString() + "'";
+                              WHERE 患者代码='" + ID + "' AND 谈方案日期 = '" + dr["谈方案日期", DataRowVersion.Original].ToString() + "'";
                 }
                 try
                 {

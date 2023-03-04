@@ -36,8 +36,8 @@ namespace DentistDatabase
         private void BindData2Dgv(DataGridView dgv)
         {
             String sqlText = @"SELECT  [牙位-患者表].种植牙位, 戴牙后复诊.就诊记录, 戴牙后复诊.日期, 戴牙后复诊.复诊症状, 
-                   戴牙后复诊.咬合情况, 戴牙后复诊.处理, 戴牙后复诊.是否拍复诊CBCT, 戴牙后复诊.是否拍复诊小牙片, 
-                   戴牙后复诊.是否拍复诊全景片, 戴牙后复诊.[临床照片（多张）]
+                   戴牙后复诊.咬合情况, 戴牙后复诊.处理, 戴牙后复诊.是否拍复诊CBCT, 戴牙后复诊.复诊CBCT链接, 戴牙后复诊.是否拍复诊小牙片,  戴牙后复诊.复诊小牙片链接,
+                   戴牙后复诊.是否拍复诊全景片, 戴牙后复诊.复诊全景片链接, 戴牙后复诊.[临床照片（多张）], 戴牙后复诊.病历, 戴牙后复诊.病历链接
                                 FROM      [牙位-患者表] INNER JOIN
                    档案目录 ON [牙位-患者表].患者代码 = 档案目录.患者代码 INNER JOIN
                    戴牙后复诊 ON [牙位-患者表].牙位ID = 戴牙后复诊.牙位ID
@@ -88,11 +88,100 @@ namespace DentistDatabase
                 String strSQL = string.Empty;
                 if (dr.RowState == System.Data.DataRowState.Added) //增加
                 {
-                    strSQL = "";
+                    strSQL = @" IF((SELECT COUNT(*)
+                                    FROM 戴牙后复诊
+                                    WHERE 牙位ID = '" + ID + dr["种植牙位"].ToString() + @"') = 1)
+                                BEGIN
+                                    RAISERROR('戴牙表中已存在数据', 16, 1)
+                                END
+                                ELSE
+                                BEGIN
+                                    IF((SELECT COUNT(*)
+                                        FROM [牙位-患者表]
+                                        WHERE 牙位ID = '" + ID + dr["种植牙位"].ToString() + @"') = 0)
+                                    BEGIN
+                                     INSERT INTO[dbo].[牙位-患者表]
+                                           ([牙位ID]
+                                           ,[患者代码]
+                                           ,[种植牙位])
+                                     VALUES
+                                           ('" + ID + dr["种植牙位"].ToString() + @"'
+                                           , '" + ID.ToString() + @"'
+                                           , '" + dr["种植牙位"].ToString() + @"')
+                                   INSERT INTO [dbo].[戴牙后复诊]
+                                       ([牙位ID]
+                                       ,[就诊记录]
+                                       ,[日期]
+                                       ,[复诊症状]
+                                       ,[咬合情况]
+                                       ,[处理]
+                                       ,[是否拍复诊CBCT]
+                                       ,[复诊CBCT链接]
+                                       ,[是否拍复诊小牙片]
+                                       ,[复诊小牙片链接]
+                                       ,[是否拍复诊全景片]
+                                       ,[复诊全景片链接]
+                                       ,[临床照片（多张）]
+                                       ,[病历]
+                                       ,[病历链接])
+                                 VALUES
+                                       ('" + ID + dr["种植牙位"].ToString() + @"'
+                                       ,'" + dr["就诊记录"].ToString() + @"'
+                                       ,'" + dr["日期"].ToString() + @"'
+                                       ,'" + dr["复诊症状"].ToString() + @"'
+                                       ,'" + dr["咬合情况"].ToString() + @"'
+                                       ,'" + dr["处理"].ToString() + @"'
+                                       ,'" + dr["是否拍复诊CBCT"].ToString() + @"'
+                                       ,'" + dr["复诊CBCT链接"].ToString() + @"'
+                                       ,'" + dr["是否拍复诊小牙片"].ToString() + @"'
+                                       ,'" + dr["复诊小牙片链接"].ToString() + @"'
+                                       ,'" + dr["是否拍复诊全景片"].ToString() + @"'
+                                       ,'" + dr["复诊全景片链接"].ToString() + @"'
+                                       ,'" + dr["临床照片（多张）"].ToString() + @"'
+                                       ,'" + dr["病历"].ToString() + @"'
+                                       ,'" + dr["病历链接"].ToString() + @"')
+                                       END
+                                      ELSE
+                                      BEGIN
+                                     INSERT INTO [dbo].[戴牙后复诊]
+                                       ([牙位ID]
+                                       ,[就诊记录]
+                                       ,[日期]
+                                       ,[复诊症状]
+                                       ,[咬合情况]
+                                       ,[处理]
+                                       ,[是否拍复诊CBCT]
+                                       ,[复诊CBCT链接]
+                                       ,[是否拍复诊小牙片]
+                                       ,[复诊小牙片链接]
+                                       ,[是否拍复诊全景片]
+                                       ,[复诊全景片链接]
+                                       ,[临床照片（多张）]
+                                       ,[病历]
+                                       ,[病历链接])
+                                 VALUES
+                                       ('" + ID + dr["种植牙位"].ToString() + @"'
+                                       ,'" + dr["就诊记录"].ToString() + @"'
+                                       ,'" + dr["日期"].ToString() + @"'
+                                       ,'" + dr["复诊症状"].ToString() + @"'
+                                       ,'" + dr["咬合情况"].ToString() + @"'
+                                       ,'" + dr["处理"].ToString() + @"'
+                                       ,'" + dr["是否拍复诊CBCT"].ToString() + @"'
+                                       ,'" + dr["复诊CBCT链接"].ToString() + @"'
+                                       ,'" + dr["是否拍复诊小牙片"].ToString() + @"'
+                                       ,'" + dr["复诊小牙片链接"].ToString() + @"'
+                                       ,'" + dr["是否拍复诊全景片"].ToString() + @"'
+                                       ,'" + dr["复诊全景片链接"].ToString() + @"'
+                                       ,'" + dr["临床照片（多张）"].ToString() + @"'
+                                       ,'" + dr["病历"].ToString() + @"'
+                                       ,'" + dr["病历链接"].ToString() + @"')
+                                      END
+                                      END";
                 }
                 else if (dr.RowState == System.Data.DataRowState.Deleted) //删除
                 {
-                    strSQL = "";
+                    strSQL = @"DELETE FROM [dbo].[戴牙后复诊]
+                                WHERE 牙位ID = '" + ID + dr["种植牙位", DataRowVersion.Original].ToString() + "'";
                 }
                 else if (dr.RowState == System.Data.DataRowState.Modified) //修改
                 {
@@ -103,9 +192,14 @@ namespace DentistDatabase
                                   ,[咬合情况] = '" + dr["咬合情况"].ToString() + @"'
                                   ,[处理] = '" + dr["处理"].ToString() + @"'
                                   ,[是否拍复诊CBCT] = '" + dr["是否拍复诊CBCT"].ToString() + @"'
+                                  ,[复诊CBCT链接] = '" + dr["复诊CBCT链接"].ToString() + @"'
                                   ,[是否拍复诊小牙片] = '" + dr["是否拍复诊小牙片"].ToString() + @"'
+                                  ,[复诊小牙片链接] = '" + dr["复诊小牙片链接"].ToString() + @"'
                                   ,[是否拍复诊全景片] = '" + dr["是否拍复诊全景片"].ToString() + @"'
+                                  ,[复诊全景片链接] = '" + dr["复诊全景片链接"].ToString() + @"'
                                   ,[临床照片（多张）] = '" + dr["临床照片（多张）"].ToString() + @"'
+                                  ,[病历] = '" + dr["病历"].ToString() + @"'
+                                  ,[病历链接] = '" + dr["病历链接"].ToString() + @"'
                                WHERE 牙位ID = (SELECT  牙位ID
 					                FROM [牙位-患者表]
 					                WHERE 患者代码 = '" + ID + "' AND 种植牙位 = '" + dr["种植牙位"].ToString() + "')";

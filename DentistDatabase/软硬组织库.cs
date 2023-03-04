@@ -101,15 +101,261 @@ namespace DentistDatabase
             foreach (DataRow dr in changeDt.Rows)
             {
                 String strSQL = string.Empty;
+
                 if (dr.RowState == System.Data.DataRowState.Added) //增加
                 {
-                    strSQL = "";
+                    strSQL = @" IF((SELECT COUNT(*)
+                                    FROM 软硬组织库
+                                    WHERE 牙位ID = '" + ID + dr["种植牙位"].ToString() + @"') = 1)
+                                BEGIN
+                                    RAISERROR('软硬组织库中已存在数据', 16, 1)
+                                END
+                                ELSE
+                                BEGIN
+                                    IF((SELECT COUNT(*)
+                                        FROM [牙位-患者表]
+                                        WHERE 牙位ID = '" + ID + dr["种植牙位"].ToString() + @"') = 0)
+                                    BEGIN
+                                     INSERT INTO[dbo].[牙位-患者表]
+                                           ([牙位ID]
+                                           ,[患者代码]
+                                           ,[种植牙位])
+                                     VALUES
+                                           ('" + ID + dr["种植牙位"].ToString() + @"'
+                                           , '" + ID.ToString() + @"'
+                                           , '" + dr["种植牙位"].ToString() + @"')
+                                   INSERT INTO [dbo].[软硬组织库]
+                                           ([牙位ID]
+                                           ,[口腔模型位置]
+                                           ,[模型备注]
+                                           ,[是否仓扫]
+                                           ,[仓扫备注]
+                                           ,[是否拍CT]
+                                           ,[CT备注]
+                                           ,[是否拟合]
+                                           ,[拟合备注]
+                                           ,[牙长轴角度]
+                                           ,[骨长轴角度]
+                                           ,[交角（牙长轴-骨长轴）]
+                                           ,[牙槽嵴顶宽度]
+                                           ,[CEJ宽度]
+                                           ,[CEJ-牙槽嵴]
+                                           ,[CEJ下2-BL]
+                                           ,[CEJ下2-B]
+                                           ,[CEJ下2-L]
+                                           ,[CEJ下2-牙根]
+                                           ,[CEJ下4-BL]
+                                           ,[CEJ下4-B]
+                                           ,[CEJ下4-L]
+                                           ,[CEJ下4-牙根]
+                                           ,[CEJ-6-BL]
+                                           ,[CEJ下6-B]
+                                           ,[CEJ下6-L]
+                                           ,[CEJ下6-牙根]
+                                           ,[根尖-唇腭侧]
+                                           ,[根尖-唇侧]
+                                           ,[根尖-腭侧（M-N）]
+                                           ,[根尖冠向2mm-唇腭侧]
+                                           ,[根尖冠向2mm-腭侧]
+                                           ,[根尖冠向2mm-牙根]
+                                           ,[根尖冠向4mm-唇腭侧]
+                                           ,[根尖冠向4mm-唇侧]
+                                           ,[根尖冠向4mm-腭侧]
+                                           ,[根尖冠向4mm-牙根]
+                                           ,[骨嵴-基骨]
+                                           ,[骨尖-基骨]
+                                           ,[牙长轴牙槽嵴-基骨]
+                                           ,[牙长轴根尖-基骨]
+                                           ,[根尖2mm宽度]
+                                           ,[牙长轴根尖2mmB]
+                                           ,[牙长轴根尖2mmP]
+                                           ,[UndercutH]
+                                           ,[UndercutD]
+                                           ,[S-CEJ+1]
+                                           ,[S-CEJ]
+                                           ,[S-CEJ1]
+                                           ,[S-CEJ2]
+                                           ,[S-CEJ4]
+                                           ,[S-CEJ6]
+                                           ,[S-Crest]
+                                           ,[Crest-Margin])
+                                     VALUES
+                                           ('" + ID + dr["种植牙位"].ToString() + @"'
+                                           ,'" + dr["口腔模型位置"].ToString() + @"'
+                                           ,'" + dr["模型备注"].ToString() + @"'
+                                           ,'" + dr["是否仓扫"].ToString() + @"'
+                                           ,'" + dr["仓扫备注"].ToString() + @"'
+                                           ,'" + dr["是否拍CT"].ToString() + @"'
+                                           ,'" + dr["CT备注"].ToString() + @"'
+                                           ,'" + dr["是否拟合"].ToString() + @"'
+                                           ,'" + dr["拟合备注"].ToString() + @"'
+                                           ,'" + dr["牙长轴角度"].ToString() + @"'
+                                           ,'" + dr["骨长轴角度"].ToString() + @"'
+                                           ,'" + dr["交角（牙长轴-骨长轴）"].ToString() + @"'
+                                           ,'" + dr["牙槽嵴顶宽度"].ToString() + @"'
+                                           ,'" + dr["CEJ宽度"].ToString() + @"'
+                                           ,'" + dr["CEJ-牙槽嵴"].ToString() + @"'
+                                           ,'" + dr["CEJ下2-BL"].ToString() + @"'
+                                           ,'" + dr["CEJ下2-B"].ToString() + @"'
+                                           ,'" + dr["CEJ下2-L"].ToString() + @"'
+                                           ,'" + dr["CEJ下2-牙根"].ToString() + @"'
+                                           ,'" + dr["CEJ下4-BL"].ToString() + @"'
+                                           ,'" + dr["CEJ下4-B"].ToString() + @"'
+                                           ,'" + dr["CEJ下4-L"].ToString() + @"'
+                                           ,'" + dr["CEJ下4-牙根"].ToString() + @"'
+                                           ,'" + dr["CEJ-6-BL"].ToString() + @"'
+                                           ,'" + dr["CEJ下6-B"].ToString() + @"'
+                                           ,'" + dr["CEJ下6-L"].ToString() + @"'
+                                           ,'" + dr["CEJ下6-牙根"].ToString() + @"'
+                                           ,'" + dr["根尖-唇腭侧"].ToString() + @"'
+                                           ,'" + dr["根尖-唇侧"].ToString() + @"'
+                                           ,'" + dr["根尖-腭侧（M-N）"].ToString() + @"'
+                                           ,'" + dr["根尖冠向2mm-唇腭侧"].ToString() + @"'
+                                           ,'" + dr["根尖冠向2mm-腭侧"].ToString() + @"'
+                                           ,'" + dr["根尖冠向2mm-牙根"].ToString() + @"'
+                                           ,'" + dr["根尖冠向4mm-唇腭侧"].ToString() + @"'
+                                           ,'" + dr["根尖冠向4mm-唇侧"].ToString() + @"'
+                                           ,'" + dr["根尖冠向4mm-腭侧"].ToString() + @"'
+                                           ,'" + dr["根尖冠向4mm-牙根"].ToString() + @"'
+                                           ,'" + dr["骨嵴-基骨"].ToString() + @"'
+                                           ,'" + dr["骨尖-基骨"].ToString() + @"'
+                                           ,'" + dr["牙长轴牙槽嵴-基骨"].ToString() + @"'
+                                           ,'" + dr["牙长轴根尖-基骨"].ToString() + @"'
+                                           ,'" + dr["根尖2mm宽度"].ToString() + @"'
+                                           ,'" + dr["牙长轴根尖2mmB"].ToString() + @"'
+                                           ,'" + dr["牙长轴根尖2mmP"].ToString() + @"'
+                                           ,'" + dr["UndercutH"].ToString() + @"'
+                                           ,'" + dr["UndercutD"].ToString() + @"'
+                                           ,'" + dr["S-CEJ+1"].ToString() + @"'
+                                           ,'" + dr["S-CEJ"].ToString() + @"'
+                                           ,'" + dr["S-CEJ1"].ToString() + @"'
+                                           ,'" + dr["S-CEJ2"].ToString() + @"'
+                                           ,'" + dr["S-CEJ4"].ToString() + @"'
+                                           ,'" + dr["S-CEJ6"].ToString() + @"'
+                                           ,'" + dr["S-Crest"].ToString() + @"'
+                                           ,'" + dr["Crest-Margin"].ToString() + @"')
+                                       END
+                                      ELSE
+                                      BEGIN
+                                     INSERT INTO [dbo].[软硬组织库]
+                                           ([牙位ID]
+                                           ,[口腔模型位置]
+                                           ,[模型备注]
+                                           ,[是否仓扫]
+                                           ,[仓扫备注]
+                                           ,[是否拍CT]
+                                           ,[CT备注]
+                                           ,[是否拟合]
+                                           ,[拟合备注]
+                                           ,[牙长轴角度]
+                                           ,[骨长轴角度]
+                                           ,[交角（牙长轴-骨长轴）]
+                                           ,[牙槽嵴顶宽度]
+                                           ,[CEJ宽度]
+                                           ,[CEJ-牙槽嵴]
+                                           ,[CEJ下2-BL]
+                                           ,[CEJ下2-B]
+                                           ,[CEJ下2-L]
+                                           ,[CEJ下2-牙根]
+                                           ,[CEJ下4-BL]
+                                           ,[CEJ下4-B]
+                                           ,[CEJ下4-L]
+                                           ,[CEJ下4-牙根]
+                                           ,[CEJ-6-BL]
+                                           ,[CEJ下6-B]
+                                           ,[CEJ下6-L]
+                                           ,[CEJ下6-牙根]
+                                           ,[根尖-唇腭侧]
+                                           ,[根尖-唇侧]
+                                           ,[根尖-腭侧（M-N）]
+                                           ,[根尖冠向2mm-唇腭侧]
+                                           ,[根尖冠向2mm-腭侧]
+                                           ,[根尖冠向2mm-牙根]
+                                           ,[根尖冠向4mm-唇腭侧]
+                                           ,[根尖冠向4mm-唇侧]
+                                           ,[根尖冠向4mm-腭侧]
+                                           ,[根尖冠向4mm-牙根]
+                                           ,[骨嵴-基骨]
+                                           ,[骨尖-基骨]
+                                           ,[牙长轴牙槽嵴-基骨]
+                                           ,[牙长轴根尖-基骨]
+                                           ,[根尖2mm宽度]
+                                           ,[牙长轴根尖2mmB]
+                                           ,[牙长轴根尖2mmP]
+                                           ,[UndercutH]
+                                           ,[UndercutD]
+                                           ,[S-CEJ+1]
+                                           ,[S-CEJ]
+                                           ,[S-CEJ1]
+                                           ,[S-CEJ2]
+                                           ,[S-CEJ4]
+                                           ,[S-CEJ6]
+                                           ,[S-Crest]
+                                           ,[Crest-Margin])
+                                     VALUES
+                                           ('" + ID + dr["种植牙位"].ToString() + @"'
+                                           ,'" + dr["口腔模型位置"].ToString() + @"'
+                                           ,'" + dr["模型备注"].ToString() + @"'
+                                           ,'" + dr["是否仓扫"].ToString() + @"'
+                                           ,'" + dr["仓扫备注"].ToString() + @"'
+                                           ,'" + dr["是否拍CT"].ToString() + @"'
+                                           ,'" + dr["CT备注"].ToString() + @"'
+                                           ,'" + dr["是否拟合"].ToString() + @"'
+                                           ,'" + dr["拟合备注"].ToString() + @"'
+                                           ,'" + dr["牙长轴角度"].ToString() + @"'
+                                           ,'" + dr["骨长轴角度"].ToString() + @"'
+                                           ,'" + dr["交角（牙长轴-骨长轴）"].ToString() + @"'
+                                           ,'" + dr["牙槽嵴顶宽度"].ToString() + @"'
+                                           ,'" + dr["CEJ宽度"].ToString() + @"'
+                                           ,'" + dr["CEJ-牙槽嵴"].ToString() + @"'
+                                           ,'" + dr["CEJ下2-BL"].ToString() + @"'
+                                           ,'" + dr["CEJ下2-B"].ToString() + @"'
+                                           ,'" + dr["CEJ下2-L"].ToString() + @"'
+                                           ,'" + dr["CEJ下2-牙根"].ToString() + @"'
+                                           ,'" + dr["CEJ下4-BL"].ToString() + @"'
+                                           ,'" + dr["CEJ下4-B"].ToString() + @"'
+                                           ,'" + dr["CEJ下4-L"].ToString() + @"'
+                                           ,'" + dr["CEJ下4-牙根"].ToString() + @"'
+                                           ,'" + dr["CEJ-6-BL"].ToString() + @"'
+                                           ,'" + dr["CEJ下6-B"].ToString() + @"'
+                                           ,'" + dr["CEJ下6-L"].ToString() + @"'
+                                           ,'" + dr["CEJ下6-牙根"].ToString() + @"'
+                                           ,'" + dr["根尖-唇腭侧"].ToString() + @"'
+                                           ,'" + dr["根尖-唇侧"].ToString() + @"'
+                                           ,'" + dr["根尖-腭侧（M-N）"].ToString() + @"'
+                                           ,'" + dr["根尖冠向2mm-唇腭侧"].ToString() + @"'
+                                           ,'" + dr["根尖冠向2mm-腭侧"].ToString() + @"'
+                                           ,'" + dr["根尖冠向2mm-牙根"].ToString() + @"'
+                                           ,'" + dr["根尖冠向4mm-唇腭侧"].ToString() + @"'
+                                           ,'" + dr["根尖冠向4mm-唇侧"].ToString() + @"'
+                                           ,'" + dr["根尖冠向4mm-腭侧"].ToString() + @"'
+                                           ,'" + dr["根尖冠向4mm-牙根"].ToString() + @"'
+                                           ,'" + dr["骨嵴-基骨"].ToString() + @"'
+                                           ,'" + dr["骨尖-基骨"].ToString() + @"'
+                                           ,'" + dr["牙长轴牙槽嵴-基骨"].ToString() + @"'
+                                           ,'" + dr["牙长轴根尖-基骨"].ToString() + @"'
+                                           ,'" + dr["根尖2mm宽度"].ToString() + @"'
+                                           ,'" + dr["牙长轴根尖2mmB"].ToString() + @"'
+                                           ,'" + dr["牙长轴根尖2mmP"].ToString() + @"'
+                                           ,'" + dr["UndercutH"].ToString() + @"'
+                                           ,'" + dr["UndercutD"].ToString() + @"'
+                                           ,'" + dr["S-CEJ+1"].ToString() + @"'
+                                           ,'" + dr["S-CEJ"].ToString() + @"'
+                                           ,'" + dr["S-CEJ1"].ToString() + @"'
+                                           ,'" + dr["S-CEJ2"].ToString() + @"'
+                                           ,'" + dr["S-CEJ4"].ToString() + @"'
+                                           ,'" + dr["S-CEJ6"].ToString() + @"'
+                                           ,'" + dr["S-Crest"].ToString() + @"'
+                                           ,'" + dr["Crest-Margin"].ToString() + @"')
+                                      END
+                                      END";
                 }
                 else if (dr.RowState == System.Data.DataRowState.Deleted) //删除
                 {
-                    strSQL = "";
+                    strSQL = @"DELETE FROM [dbo].[软硬组织库]
+                                WHERE 牙位ID = '" + ID + dr["种植牙位", DataRowVersion.Original].ToString() + "'";
                 }
-                else if (dr.RowState == System.Data.DataRowState.Modified) //修改
+                else if (dr.RowState == System.Data.DataRowState.Modified)//修改
                 {
                     strSQL = @"UPDATE [dbo].[软硬组织库]
                                    SET [口腔模型位置] = '" + dr["口腔模型位置"].ToString() + @"'
@@ -168,29 +414,29 @@ namespace DentistDatabase
                                        WHERE 牙位ID = (SELECT  牙位ID
 					                FROM [牙位-患者表]
 					                WHERE 患者代码 = '" + ID + "' AND 种植牙位 = '" + dr["种植牙位"].ToString() + "')";
-                    try
-                    {
-                        conn.Open();
+                }
+                try
+                {
+                    conn.Open();
 
-                        trans = conn.BeginTransaction();
+                    trans = conn.BeginTransaction();
 
-                        cmd.Connection = conn;
-                        cmd.CommandText = strSQL;
-                        cmd.Transaction = trans;
-                        int result = cmd.ExecuteNonQuery();  //更新都用这个语句。
+                    cmd.Connection = conn;
+                    cmd.CommandText = strSQL;
+                    cmd.Transaction = trans;
+                    int result = cmd.ExecuteNonQuery();  //更新都用这个语句。
 
-                        trans.Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        trans.Rollback();
-                        MessageBox.Show(ex.Message);
-                        // throw new ApplicationException("执行SQL语句异常:" + ex.Message + "(" + sqlText + ")");
-                    }
-                    finally
-                    {
-                        conn.Close();
-                    }
+                    trans.Commit();
+                }
+                catch (Exception ex)
+                {
+                    trans.Rollback();
+                    MessageBox.Show(ex.Message);
+                    // throw new ApplicationException("执行SQL语句异常:" + ex.Message + "(" + sqlText + ")");
+                }
+                finally
+                {
+                    conn.Close();
                 }
                 MessageBox.Show("suceed!");
                 return;

@@ -53,7 +53,7 @@ namespace DentistDatabase
 
         private void BindData2Dgv(DataGridView dgv)
         {
-            String sqlText = @"SELECT  [牙位-患者表].种植牙位, 初诊.[就诊记录(时间+日期)], 初诊.初诊日期,  初诊.是否取初诊印模, 初诊.是否拍初诊CBCT, 初诊.初诊CBCT链接, 初诊.是否拍初诊小牙片, 初诊.初诊小牙片链接, 初诊.是否拍初诊全景片, 初诊.初诊全景片链接, 初诊.缺牙位点, 初诊.是否口扫, 初诊.口扫链接, 初诊.是否面扫, 初诊.面扫链接, 初诊.是否电子面弓, 初诊.电子面弓链接, 初诊.病历, 初诊.病历链接 " +
+            String sqlText = @"SELECT  [牙位-患者表].种植牙位, 初诊.就诊记录, 初诊.初诊日期,  初诊.是否取初诊印模, 初诊.是否拍初诊CBCT, 初诊.初诊CBCT链接, 初诊.是否拍初诊小牙片, 初诊.初诊小牙片链接, 初诊.是否拍初诊全景片, 初诊.初诊全景片链接, 初诊.缺牙位点, 初诊.是否口扫, 初诊.口扫链接, 初诊.是否面扫, 初诊.面扫链接, 初诊.是否电子面弓, 初诊.电子面弓链接, 初诊.病历, 初诊.病历链接 " +
                                 "FROM 初诊 INNER JOIN [牙位-患者表] ON 初诊.牙位ID = [牙位-患者表].牙位ID INNER JOIN 档案目录 ON [牙位-患者表].患者代码 = 档案目录.患者代码 " +
                                 "WHERE [牙位-患者表].患者代码 = '" + ID + "'";
 
@@ -125,7 +125,7 @@ namespace DentistDatabase
                                            ,'" + dr["种植牙位"].ToString() + @"')
                                     INSERT INTO [dbo].[初诊]
                                                ([牙位ID]
-                                               ,[就诊记录(时间+日期)]
+                                               ,[就诊记录]
                                                ,[初诊日期]
                                                ,[是否取初诊印模]
                                                ,[是否拍初诊CBCT]
@@ -145,7 +145,7 @@ namespace DentistDatabase
                                                ,[病历链接])
                                          VALUES
                                                ('" + ID + dr["种植牙位"].ToString() + @"'
-                                               ,'" + dr["就诊记录(时间+日期)"].ToString() + @"'
+                                               ,'" + dr["就诊记录"].ToString() + @"'
                                                ,'" + dr["初诊日期"].ToString() + @"'
                                                ,'" + dr["是否取初诊印模"].ToString() + @"'
                                                ,'" + dr["是否拍初诊CBCT"].ToString() + @"'
@@ -168,7 +168,7 @@ namespace DentistDatabase
                                       BEGIN
                                       INSERT INTO [dbo].[初诊]
                                                ([牙位ID]
-                                               ,[就诊记录(时间+日期)]
+                                               ,[就诊记录]
                                                ,[初诊日期]
                                                ,[是否取初诊印模]
                                                ,[是否拍初诊CBCT]
@@ -188,7 +188,7 @@ namespace DentistDatabase
                                                ,[病历链接])
                                          VALUES
                                                ('" + ID + dr["种植牙位"].ToString() + @"'
-                                               ,'" + dr["就诊记录(时间+日期)"].ToString() + @"'
+                                               ,'" + dr["就诊记录"].ToString() + @"'
                                                ,'" + dr["初诊日期"].ToString() + @"'
                                                ,'" + dr["是否取初诊印模"].ToString() + @"'
                                                ,'" + dr["是否拍初诊CBCT"].ToString() + @"'
@@ -217,7 +217,7 @@ namespace DentistDatabase
                 else if (dr.RowState == System.Data.DataRowState.Modified) //修改
                 {
                     strSQL = @"UPDATE [初诊]
-                            SET [就诊记录(时间+日期)] = '" + dr["就诊记录(时间+日期)"].ToString() + @"'
+                            SET [就诊记录] = '" + dr["就诊记录"].ToString() + @"'
                               ,[初诊日期] = '" + dr["初诊日期"].ToString() + @"'
                               ,[是否取初诊印模] = '" + dr["是否取初诊印模"].ToString() + @"'
                               ,[是否拍初诊CBCT] = '" + dr["是否拍初诊CBCT"].ToString() + @"'

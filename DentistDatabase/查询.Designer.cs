@@ -30,13 +30,14 @@
         {
             this.Dgv4Patients = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnRefresh = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv4Patients)).BeginInit();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -53,6 +54,7 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.textBox2);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.label2);
@@ -63,6 +65,15 @@
             this.panel1.Size = new System.Drawing.Size(810, 439);
             this.panel1.TabIndex = 1;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(229, 172);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(97, 15);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "按身份证查询";
             // 
             // textBox1
             // 
@@ -123,14 +134,12 @@
             this.button1.Text = "新建牙齿";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // textBox2
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(228, 164);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(97, 15);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "按身份证查询";
+            this.textBox2.Location = new System.Drawing.Point(389, 169);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(161, 25);
+            this.textBox2.TabIndex = 6;
             // 
             // 查询
             // 
@@ -163,5 +172,6 @@
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox2;
     }
 }

@@ -67,6 +67,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="合并就诊记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="合并就诊记录.Designer.cs">
+      <DependentUpon>合并就诊记录.cs</DependentUpon>
+    </Compile>
+    <Compile Include="就诊记录查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="就诊记录查询.Designer.cs">
+      <DependentUpon>就诊记录查询.cs</DependentUpon>
+    </Compile>
     <Compile Include="患者建档.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +190,12 @@
     <Compile Include="选择患者编辑.Designer.cs">
       <DependentUpon>选择患者编辑.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="合并就诊记录.resx">
+      <DependentUpon>合并就诊记录.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="就诊记录查询.resx">
+      <DependentUpon>就诊记录查询.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="患者建档.resx">
       <DependentUpon>患者建档.cs</DependentUpon>
     </EmbeddedResource>
