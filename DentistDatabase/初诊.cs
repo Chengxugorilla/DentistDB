@@ -22,19 +22,17 @@ namespace DentistDatabase
         private static System.Data.DataTable dt = null;
         private static OleDbConnection conn;
         private static System.Data.DataTable changeDt = null;
-        
 
         private void 初诊_Load(object sender, EventArgs e)
         {
             BindData2Dgv(dataGridView1);
         }
 
-
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
-                int[] ia = { 5, 7, 9 , 13, 15, 17, 19};
+                int[] ia = { 5, 7, 9, 13, 15, 17, 19 };
                 int id = Array.IndexOf(ia, e.ColumnIndex);
                 if (!(id == -1))
                 {
@@ -103,7 +101,7 @@ namespace DentistDatabase
                 String strSQL = string.Empty;
                 if (dr.RowState == System.Data.DataRowState.Added) //增加
                 {
-                    strSQL =  @" IF((SELECT COUNT(*) 
+                    strSQL = @" IF((SELECT COUNT(*) 
                                     FROM 初诊
                                     WHERE 牙位ID = '" + ID + dr["种植牙位"].ToString() + @"') = 1)
                                 BEGIN
@@ -212,7 +210,7 @@ namespace DentistDatabase
                 else if (dr.RowState == System.Data.DataRowState.Deleted) //删除
                 {
                     strSQL = @"DELETE FROM [dbo].[初诊]
-                                WHERE 牙位ID = '" + ID + dr["种植牙位",DataRowVersion.Original].ToString() + "'";
+                                WHERE 牙位ID = '" + ID + dr["种植牙位", DataRowVersion.Original].ToString() + "'";
                 }
                 else if (dr.RowState == System.Data.DataRowState.Modified) //修改
                 {
