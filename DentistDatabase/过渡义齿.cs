@@ -75,6 +75,27 @@ namespace DentistDatabase
             }
         }
 
+        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                int[] ia = { 11, 13, 15, 16, 19 };
+                int id = Array.IndexOf(ia, e.ColumnIndex);
+                if (!(id == -1))
+                {
+                    var row = dataGridView1.Rows[e.RowIndex];
+                    if (row.Cells[e.ColumnIndex].Value == null) return;
+                    var url = row.Cells[e.ColumnIndex].Value.ToString();
+                    System.Diagnostics.Process.Start(url);
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("存储路径错误，请检查路径是否正确");
+            }
+        }
+
         public static void Save(String ID)
         {
             conn = new OleDbConnection(DBInfo.ConnectString);

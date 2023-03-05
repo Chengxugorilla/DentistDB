@@ -34,7 +34,7 @@ namespace DentistDatabase
         {
             try
             {
-                int[] ia = { 6, 8, 10, 13, 15, 17, 19};
+                int[] ia = { 5, 7, 9 , 13, 15, 17, 19};
                 int id = Array.IndexOf(ia, e.ColumnIndex);
                 if (!(id == -1))
                 {

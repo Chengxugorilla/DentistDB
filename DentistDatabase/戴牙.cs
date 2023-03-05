@@ -35,6 +35,27 @@ namespace DentistDatabase
             BindData2Dgv(dataGridView1);
         }
 
+        private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                int[] ia = { 13, 15, 17, 18, 20 };
+                int id = Array.IndexOf(ia, e.ColumnIndex);
+                if (!(id == -1))
+                {
+                    var row = dataGridView1.Rows[e.RowIndex];
+                    if (row.Cells[e.ColumnIndex].Value == null) return;
+                    var url = row.Cells[e.ColumnIndex].Value.ToString();
+                    System.Diagnostics.Process.Start(url);
+                }
+            }
+
+            catch
+            {
+                MessageBox.Show("存储路径错误，请检查路径是否正确");
+            }
+        }
+
         private void BindData2Dgv(DataGridView dgv)
         {
             String sqlText = @"SELECT  [牙位-患者表].种植牙位, 戴牙.就诊记录, 戴牙.日期, 戴牙.基台编号, 戴牙.基台类型, 
